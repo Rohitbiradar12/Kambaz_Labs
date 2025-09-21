@@ -184,7 +184,7 @@ export default function Lab1() {
       <section id="wd-images">
         <h4>Image tag</h4>
 
-        {/* Row 1: three logos side by side */}
+        
         <table role="presentation" width="100%">
           <tbody>
             <tr>
@@ -217,7 +217,7 @@ export default function Lab1() {
               </td>
             </tr>
 
-            {/* Row 2: Northeastern logo centered */}
+            
             <tr>
               <td align="center" colSpan={3}>
                 <img
@@ -237,7 +237,7 @@ export default function Lab1() {
         <h4>Form Elements</h4>
 
         <form id="wd-text-fields" action="#" method="get">
-          {/* TEXT FIELDS */}
+         
           <fieldset>
             <legend>Text Fields</legend>
             <table role="presentation" cellPadding={6} cellSpacing={4}>
@@ -351,7 +351,7 @@ export default function Lab1() {
             </table>
           </fieldset>
 
-          {/* MORE FIELDS */}
+         
           <fieldset>
             <legend>More Fields</legend>
             <table role="presentation" cellPadding={6} cellSpacing={4}>
@@ -426,7 +426,7 @@ export default function Lab1() {
             </table>
           </fieldset>
 
-          {/* PREFERENCES */}
+          
           <fieldset>
             <legend>Preferences</legend>
 
@@ -549,7 +549,7 @@ export default function Lab1() {
             </table>
           </fieldset>
 
-          {/* ACTIONS */}
+          
           <div>
             <button type="submit">Submit</button>
             &nbsp;
