@@ -9,7 +9,7 @@ export default function Lab1() {
         <strong>Full Name:</strong> Rohit Biradar
       </p>
       <p>
-        <strong>Section:</strong> Web-Dev-Assignment-1
+        <strong>Section:</strong> 04
       </p>
       <h3>HTML Examples</h3>
       <div id="wd-h-tag">
