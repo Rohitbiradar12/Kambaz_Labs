@@ -3,30 +3,31 @@ export default function AssignmentEditor() {
     <div id="wd-assignments-editor">
       <h2>Assignment Name</h2>
 
-      {/* Title */}
+  
       <label htmlFor="wd-name">Assignment Name</label>
       <br />
       <input id="wd-name" defaultValue="A1 - ENV + HTML" />
       <br />
       <br />
 
-      {/* Description */}
       <label htmlFor="wd-description">Description</label>
       <br />
-      <textarea id="wd-description" rows={8} cols={60}>
-        The assignment is available online. Submit a link to the landing page of
-        your Web application running on Vercel. The landing page should include
-        your full name and section, links to each of the lab exercises, a link
-        to the Kambaz app, and links to the source code repositories. The Kambaz
-        app should include a link to navigate back to the landing page.
-      </textarea>
+      <textarea
+        id="wd-description"
+        rows={8}
+        cols={60}
+        defaultValue={`The assignment is available online. Submit a link to the landing page of
+your Web application running on Vercel. The landing page should include
+your full name and section, links to each of the lab exercises, a link
+to the Kambaz application, and links to the source code repositories.
+The Kambaz application should include a link back to the landing page.`}
+      />
       <br />
       <br />
 
-      {/* Details block */}
       <table>
         <tbody>
-          {/* Points */}
+       
           <tr>
             <td align="right" valign="top">
               <label htmlFor="wd-points">Points</label>
@@ -36,7 +37,7 @@ export default function AssignmentEditor() {
             </td>
           </tr>
 
-          {/* Assignment Group */}
+      
           <tr>
             <td align="right" valign="top">
               <label htmlFor="wd-group">Assignment Group</label>
@@ -51,7 +52,7 @@ export default function AssignmentEditor() {
             </td>
           </tr>
 
-          {/* Display Grade as */}
+        
           <tr>
             <td align="right" valign="top">
               <label htmlFor="wd-display-grade-as">Display Grade as</label>
@@ -66,7 +67,7 @@ export default function AssignmentEditor() {
             </td>
           </tr>
 
-          {/* Submission Type */}
+   
           <tr>
             <td align="right" valign="top">
               <label htmlFor="wd-submission-type">Submission Type</label>
@@ -111,7 +112,7 @@ export default function AssignmentEditor() {
             </td>
           </tr>
 
-          {/* Assign to */}
+        
           <tr>
             <td align="right" valign="top">
               <label htmlFor="wd-assign-to">Assign to</label>
@@ -121,7 +122,7 @@ export default function AssignmentEditor() {
             </td>
           </tr>
 
-          {/* Due date */}
+         
           <tr>
             <td align="right" valign="top">
               <label htmlFor="wd-due-date">Due</label>
@@ -131,7 +132,7 @@ export default function AssignmentEditor() {
             </td>
           </tr>
 
-          {/* Available from / until */}
+      
           <tr>
             <td align="right" valign="top">
               <label htmlFor="wd-available-from">Available from</label>
@@ -153,7 +154,6 @@ export default function AssignmentEditor() {
             </td>
           </tr>
 
-          {/* Actions */}
           <tr>
             <td />
             <td>
