@@ -1,8 +1,9 @@
+import Link from "next/link";
+
 export default function Modules() {
   return (
     <div>
       <ul id="wd-modules">
-        {/* Week 1 */}
         <li className="wd-module">
           <div className="wd-title">Week 1</div>
           <ul className="wd-lessons">
@@ -111,12 +112,12 @@ export default function Modules() {
               <span className="wd-title">ASSIGNMENTS</span>
               <ul className="wd-content">
                 <li className="wd-content-item">
-                  Update your <a href="/Labs/Lab1/">Lab 1 landing</a> with links to
+                  Update your <Link href="/Labs/Lab1/">Lab 1 landing</Link> with links to
                   all exercises
                 </li>
                 <li className="wd-content-item">
-                  Ensure Kambaz home (<a href="/">/</a>) links back to{" "}
-                  <a href="/Labs">Labs</a>
+                  Ensure Kambaz home (<Link href="/">/</Link>) links back to{" "}
+                  <Link href="/Labs">Labs</Link>
                 </li>
               </ul>
             </li>
