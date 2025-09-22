@@ -728,6 +728,13 @@ export default function Lab1() {
             kambaz-labs (GitHub)
           </a>
         </p>
+        <div id="wd-kambaz-link">
+        <h4>Back to Kambaz</h4>
+        <ul>
+          <li><a href="/Dashboard">Open Kambaz Dashboard</a></li>
+          <li><a href="/Account/Signin">Go to Kambaz Signin</a></li>
+        </ul>
+      </div>
       </div>
     </section>
   );
