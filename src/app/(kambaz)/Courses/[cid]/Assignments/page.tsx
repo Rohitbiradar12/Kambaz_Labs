@@ -18,27 +18,26 @@ export default function Assignments() {
 
   return (
     <div id="wd-assignments" style={wrap}>
-      {/* toolbar */}
+
       <div style={toolbar}>
         <input style={search} placeholder="Search for Assignments" id="wd-search-assignment" />
         <button id="wd-add-assignment-group">+ Group</button>
         <button id="wd-add-assignment">+ Assignment</button>
       </div>
 
-      {/* header */}
       <div style={titleRow}>
         <h3 id="wd-assignments-title" style={{ margin: 0 }}>ASSIGNMENTS 40% of Total</h3>
         <button type="button" aria-label="Add">+</button>
       </div>
 
-      {/* list */}
+   
       <ul id="wd-assignment-list" style={list}>
         <li className="wd-assignment-list-item" style={card}>
           <Link href="/Courses/1234/Assignments/123" className="wd-assignment-link" style={link}>
             A1 - ENV + HTML
           </Link>
           <div style={meta}>
-            Multiple Modules · <strong>Not available</strong> until May 6 at 12:00am · <strong>Due</strong> May 13 at 11:59pm · <strong>100 pts</strong>
+            Multiple Modules · <strong>Not available</strong> until Sept 19 at 12:00am · <strong>Due</strong> Sept 22 at 11:59pm · <strong>100 pts</strong>
           </div>
         </li>
 
@@ -47,7 +46,7 @@ export default function Assignments() {
             A2 - CSS + BOOTSTRAP
           </Link>
           <div style={meta}>
-            Multiple Modules · <strong>Not available</strong> until May 13 at 12:00am · <strong>Due</strong> May 20 at 11:59pm · <strong>100 pts</strong>
+            Multiple Modules · <strong>Not available</strong> until Sept 30 at 12:00am · <strong>Due</strong> Oct 4 at 11:59pm · <strong>100 pts</strong>
           </div>
         </li>
 
@@ -56,7 +55,7 @@ export default function Assignments() {
             A3 - JAVASCRIPT + REACT
           </Link>
           <div style={meta}>
-            Multiple Modules · <strong>Not available</strong> until May 20 at 12:00am · <strong>Due</strong> May 27 at 11:59pm · <strong>100 pts</strong>
+            Multiple Modules · <strong>Not available</strong> until Oct 5 at 12:00am · <strong>Due</strong> Oct  at 11:59pm · <strong>100 pts</strong>
           </div>
         </li>
       </ul>
