@@ -3,9 +3,9 @@ export default function People() {
     <section id="wd-people">
       <h1>People</h1>
       <ul>
-        <li><strong>Professor:</strong> Prof. Jose (profjose@university.edu)</li>
-        <li><strong>TA:</strong> Jane Doe (jane@university.edu)</li>
-        <li><strong>Student:</strong> Rohit Biradar</li>
+        <li><strong>Professor:</strong> Prof. Jose (profjose@northeastern.edu)</li>
+        <li><strong>TA:</strong> Jane Doe (jane@northeastern.edu)</li>
+        <li><strong>Student:</strong> Rohit Biradar (biradar.roh@northeastern.edu)</li>
       </ul>
       <p><a href="../Home">Back to Home</a></p>
     </section>

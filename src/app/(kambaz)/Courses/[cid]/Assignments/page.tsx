@@ -55,7 +55,7 @@ export default function Assignments() {
             A3 - JAVASCRIPT + REACT
           </Link>
           <div style={meta}>
-            Multiple Modules · <strong>Not available</strong> until Oct 5 at 12:00am · <strong>Due</strong> Oct  at 11:59pm · <strong>100 pts</strong>
+            Multiple Modules · <strong>Not available</strong> until Oct 5 at 12:00am · <strong>Due</strong> Oct 5 at 11:59pm · <strong>100 pts</strong>
           </div>
         </li>
       </ul>

@@ -25,7 +25,7 @@ export default function CourseStatus() {
         Course Status
       </h2>
 
-      {/* Publish controls */}
+    
       <div style={group}>
         <button type="button" aria-pressed="false">
           Unpublish
@@ -35,14 +35,14 @@ export default function CourseStatus() {
         </button>
       </div>
 
-      {/* Course actions */}
+  
       <div style={{ ...group, marginTop: 12 }}>
         <button type="button">Import Existing Content</button>
         <button type="button">Import From Commons</button>
         <button type="button">Choose Home Page</button>
       </div>
 
-      {/* Course tools */}
+     
       <div aria-label="Course tools" style={{ ...group, marginTop: 12 }}>
         <button type="button">View Course Stream</button>
         <button type="button">New Announcement</button>

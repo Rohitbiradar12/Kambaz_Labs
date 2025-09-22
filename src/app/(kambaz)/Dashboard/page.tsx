@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Dashboard() {
-  // inline style helpers (no external CSS)
+
   const grid: React.CSSProperties = {
     display: "grid",
     gridTemplateColumns: "repeat(3, 1fr)",
@@ -30,7 +30,7 @@ export default function Dashboard() {
       <hr style={{ marginBottom: 16 }} />
 
       <div id="wd-dashboard-courses" style={grid}>
-        {/* Card 1 */}
+   
         <Link href="/Courses/CS1234" style={card}>
           <div style={thumbWrap}>
             <Image src="https://commons.wikimedia.org/wiki/Special:FilePath/React-icon.svg" width={220} height={120} alt="React JS" />
@@ -39,7 +39,7 @@ export default function Dashboard() {
           <p style={subtitle}>Full Stack Software Developer</p>
         </Link>
 
-        {/* Card 2 */}
+   
         <Link href="/Courses/CS5610" style={card}>
           <div style={thumbWrap}>
             <Image src="/next.svg" width={220} height={120} alt="Next.js Web Development" />
@@ -48,7 +48,6 @@ export default function Dashboard() {
           <p style={subtitle}>App Router, Routing, Deployment</p>
         </Link>
 
-        {/* Card 3 */}
         <Link href="/Courses/CS1100" style={card}>
           <div style={thumbWrap}>
             <Image src="/HTML.png" width={220} height={120} alt="HTML & CSS" />
@@ -57,7 +56,7 @@ export default function Dashboard() {
           <p style={subtitle}>Semantic HTML, Lists, Tables, Forms</p>
         </Link>
 
-        {/* Card 4 */}
+       
         <Link href="/Courses/CS2000" style={card}>
           <div style={thumbWrap}>
             <Image src="/JS.png" width={220} height={120} alt="JavaScript Fundamentals" />
@@ -66,7 +65,7 @@ export default function Dashboard() {
           <p style={subtitle}>Syntax, DOM, Events</p>
         </Link>
 
-        {/* Card 5 */}
+       
         <Link href="/Courses/CS3200" style={card}>
           <div style={thumbWrap}>
             <Image src="/database.jpg" width={220} height={120} alt="Databases" />
@@ -75,7 +74,7 @@ export default function Dashboard() {
           <p style={subtitle}>SQL, ER Modeling, Joins</p>
         </Link>
 
-        {/* Card 6 */}
+      
         <Link href="/Courses/CS4500" style={card}>
           <div style={thumbWrap}>
             <Image src="/devops.svg" width={220} height={120} alt="DevOps Foundations" />

@@ -3,14 +3,14 @@ export default function CourseNav({ cid }: { cid: string }) {
   return (
     <nav aria-label="Course navigation">
       <ul>
-        <li><a href={`/Courses/${cid}/Home`}>Home</a></li>
-        <li><a href={`/Courses/${cid}/Modules`}>Modules</a></li>
-        <li><a href={`/Courses/${cid}/Piazza`}>Piazza</a></li>
-        <li><a href={`/Courses/${cid}/Zoom`}>Zoom</a></li>
-        <li><a href={`/Courses/${cid}/Quizzes`}>Quizzes</a></li>
-        <li><a href={`/Courses/${cid}/Assignments`}>Assignments</a></li>
-        <li><a href={`/Courses/${cid}/Grades`}>Grades</a></li>
-        <li><a href={`/Courses/${cid}/People`}>People</a></li>
+        <li><Link href={`/Courses/${cid}/Home`}>Home</Link></li>
+        <li><Link href={`/Courses/${cid}/Modules`}>Modules</Link></li>
+        <li><Link href={`/Courses/${cid}/Piazza`}>Piazza</Link></li>
+        <li><Link href={`/Courses/${cid}/Zoom`}>Zoom</Link></li>
+        <li><Link href={`/Courses/${cid}/Quizzes`}>Quizzes</Link></li>
+        <li><Link href={`/Courses/${cid}/Assignments`}>Assignments</Link></li>
+        <li><Link href={`/Courses/${cid}/Grades`}>Grades</Link></li>
+        <li><Link href={`/Courses/${cid}/People`}>People</Link></li>
       </ul>
     </nav>
   );
