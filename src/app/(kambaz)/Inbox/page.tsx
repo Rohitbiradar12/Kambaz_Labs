@@ -7,15 +7,15 @@ export default function Inbox() {
       <ul>
         <li>
           <strong>Prof. Jose</strong> — “Welcome to the course!”<br />
-          <small>May 1, 9:10 AM</small>
+          <small>Sept 3, 9:10 AM</small>
         </li>
         <li>
           <strong>TA Jane</strong> — “Office hours update”<br />
-          <small>May 3, 2:30 PM</small>
+          <small>Sept 7, 2:30 PM</small>
         </li>
         <li>
           <strong>System</strong> — “A1 is due soon”<br />
-          <small>May 12, 8:00 AM</small>
+          <small>Sept 18, 8:00 AM</small>
         </li>
       </ul>
 

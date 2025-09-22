@@ -128,7 +128,7 @@ The Kambaz application should include a link back to the landing page.`}
               <label htmlFor="wd-due-date">Due</label>
             </td>
             <td>
-              <input id="wd-due-date" type="date" defaultValue="2024-05-13" />
+              <input id="wd-due-date" type="date" defaultValue="2025-09-22" />
             </td>
           </tr>
 
@@ -141,7 +141,7 @@ The Kambaz application should include a link back to the landing page.`}
               <input
                 id="wd-available-from"
                 type="date"
-                defaultValue="2024-05-06"
+                defaultValue="2025-09-19"
               />
               &nbsp;&nbsp;&nbsp;
               <label htmlFor="wd-available-until">Until</label>
@@ -149,7 +149,7 @@ The Kambaz application should include a link back to the landing page.`}
               <input
                 id="wd-available-until"
                 type="date"
-                defaultValue="2024-05-20"
+                defaultValue="2025-09-22"
               />
             </td>
           </tr>
