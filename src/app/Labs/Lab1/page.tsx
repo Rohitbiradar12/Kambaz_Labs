@@ -184,7 +184,6 @@ export default function Lab1() {
       <section id="wd-images">
         <h4>Image tag</h4>
 
-        
         <table role="presentation" width="100%">
           <tbody>
             <tr>
@@ -217,7 +216,6 @@ export default function Lab1() {
               </td>
             </tr>
 
-            
             <tr>
               <td align="center" colSpan={3}>
                 <img
@@ -237,7 +235,6 @@ export default function Lab1() {
         <h4>Form Elements</h4>
 
         <form id="wd-text-fields" action="#" method="get">
-         
           <fieldset>
             <legend>Text Fields</legend>
             <table role="presentation" cellPadding={6} cellSpacing={4}>
@@ -351,7 +348,6 @@ export default function Lab1() {
             </table>
           </fieldset>
 
-         
           <fieldset>
             <legend>More Fields</legend>
             <table role="presentation" cellPadding={6} cellSpacing={4}>
@@ -426,11 +422,10 @@ export default function Lab1() {
             </table>
           </fieldset>
 
-          
           <fieldset>
             <legend>Preferences</legend>
 
-            <p>Favorite genre (radio):</p>
+            <p>Favorite Programming Language:</p>
             <table role="presentation" cellPadding={4}>
               <tbody>
                 <tr>
@@ -438,34 +433,50 @@ export default function Lab1() {
                     <label>
                       <input
                         type="radio"
-                        name="favGenre"
-                        value="comedy"
+                        name="favLang"
+                        value="javascript"
                         defaultChecked
                       />{" "}
-                      Comedy
+                      JavaScript
                     </label>
                   </td>
                   <td>
                     <label>
-                      <input type="radio" name="favGenre" value="drama" /> Drama
+                      <input type="radio" name="favLang" value="typescript" />{" "}
+                      TypeScript
                     </label>
                   </td>
                   <td>
                     <label>
-                      <input type="radio" name="favGenre" value="scifi" /> SciFi
+                      <input type="radio" name="favLang" value="python" />{" "}
+                      Python
                     </label>
                   </td>
                   <td>
                     <label>
-                      <input type="radio" name="favGenre" value="fantasy" />{" "}
-                      Fantasy
+                      <input type="radio" name="favLang" value="java" /> Java
+                    </label>
+                  </td>
+                  <td>
+                    <label>
+                      <input type="radio" name="favLang" value="cpp" /> C++
+                    </label>
+                  </td>
+                  <td>
+                    <label>
+                      <input type="radio" name="favLang" value="go" /> Go
+                    </label>
+                  </td>
+                  <td>
+                    <label>
+                      <input type="radio" name="favLang" value="rust" /> Rust
                     </label>
                   </td>
                 </tr>
               </tbody>
             </table>
 
-            <p>Interested in (checkbox):</p>
+            <p>Languages you use (checkbox):</p>
             <table role="presentation" cellPadding={4}>
               <tbody>
                 <tr>
@@ -473,32 +484,49 @@ export default function Lab1() {
                     <label>
                       <input
                         type="checkbox"
-                        name="likes"
-                        value="comedy"
+                        name="langs"
+                        value="javascript"
                         defaultChecked
                       />{" "}
-                      Comedy
+                      JavaScript
                     </label>
                   </td>
                   <td>
                     <label>
-                      <input type="checkbox" name="likes" value="drama" /> Drama
+                      <input type="checkbox" name="langs" value="typescript" />{" "}
+                      TypeScript
                     </label>
                   </td>
                   <td>
                     <label>
-                      <input type="checkbox" name="likes" value="scifi" /> SciFi
+                      <input type="checkbox" name="langs" value="python" />{" "}
+                      Python
+                    </label>
+                  </td>
+                  <td>
+                    <label>
+                      <input type="checkbox" name="langs" value="java" /> Java
+                    </label>
+                  </td>
+                  <td>
+                    <label>
+                      <input type="checkbox" name="langs" value="cpp" /> C++
+                    </label>
+                  </td>
+                  <td>
+                    <label>
+                      <input type="checkbox" name="langs" value="go" /> Go
                     </label>
                   </td>
                   <td>
                     <label>
                       <input
                         type="checkbox"
-                        name="likes"
-                        value="fantasy"
+                        name="langs"
+                        value="rust"
                         defaultChecked
                       />{" "}
-                      Fantasy
+                      Rust
                     </label>
                   </td>
                 </tr>
@@ -549,7 +577,6 @@ export default function Lab1() {
             </table>
           </fieldset>
 
-          
           <div>
             <button type="submit">Submit</button>
             &nbsp;
@@ -729,12 +756,16 @@ export default function Lab1() {
           </a>
         </p>
         <div id="wd-kambaz-link">
-        <h4>Back to Kambaz</h4>
-        <ul>
-          <li><a href="/Dashboard">Open Kambaz Dashboard</a></li>
-          <li><a href="/Account/Signin">Go to Kambaz Signin</a></li>
-        </ul>
-      </div>
+          <h4>Back to Kambaz</h4>
+          <ul>
+            <li>
+              <a href="/Dashboard">Open Kambaz Dashboard</a>
+            </li>
+            <li>
+              <a href="/Account/Signin">Go to Kambaz Signin</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
   );

@@ -6,9 +6,9 @@ export default function Calendar() {
 
       <h3>Upcoming</h3>
       <ul>
-        <li>May 13 – A1 Due (11:59pm)</li>
-        <li>May 20 – A2 Due (11:59pm)</li>
-        <li>May 27 – A3 Due (11:59pm)</li>
+        <li>Sept 22 – A1 Due (11:59pm)</li>
+        <li>Sept 29 – A2 Due (11:59pm)</li>
+        <li>OCt 02 – A3 Due (11:59pm)</li>
       </ul>
 
       <hr />
