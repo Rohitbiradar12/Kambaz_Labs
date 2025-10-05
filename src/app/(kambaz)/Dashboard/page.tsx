@@ -1,88 +1,147 @@
+"use client";
+
 import Link from "next/link";
-import Image from "next/image";
+import {
+  Row,
+  Col,
+  Card,
+  CardImg,
+  CardBody,
+  CardTitle,
+  CardText,
+} from "react-bootstrap";
+import { LuNotebookPen } from "react-icons/lu";
 
 export default function Dashboard() {
-
-  const grid: React.CSSProperties = {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gap: "24px",
-    alignItems: "start",
-  };
-  const card: React.CSSProperties = {
-    display: "block",
-    background: "#fff",
-    borderRadius: 8,
-    boxShadow: "0 2px 6px rgba(0,0,0,0.12)",
-    padding: 12,
-    textDecoration: "none",
-    color: "inherit",
-  };
-  const thumbWrap: React.CSSProperties = { textAlign: "center", marginBottom: 8 };
-  const title: React.CSSProperties = { margin: "6px 0 4px 0" };
-  const subtitle: React.CSSProperties = { margin: 0, fontSize: 14, lineHeight: 1.3, color: "#333" };
-
   return (
-    <div id="wd-dashboard" style={{ padding: 16 }}>
-      <h1 id="wd-dashboard-title" style={{ marginBottom: 8 }}>Dashboard</h1>
-      <hr />
-      <h2 id="wd-dashboard-published" style={{ margin: "12px 0" }}>Published Courses (6)</h2>
-      <hr style={{ marginBottom: 16 }} />
+    <div
+      id="wd-dashboard"
+      style={{ padding: "20px 16px 40px 140px", overflowX: "hidden" }}
+    >
+       <style>{`
+    @media (max-width: 767.98px) {
+      #wd-dashboard { padding-left: 0 !important; }
+    }
+  `}</style>
+      <div className="container-xl px-2">
+        <h1 id="wd-dashboard-title">Dashboard</h1>
+        <hr />
+        <h2 id="wd-dashboard-published">
+          Published Courses ({courses.length})
+        </h2>
+        <hr />
 
-      <div id="wd-dashboard-courses" style={grid}>
-   
-        <Link href="/Courses/CS1234" style={card}>
-          <div style={thumbWrap}>
-            <Image src="https://commons.wikimedia.org/wiki/Special:FilePath/React-icon.svg" width={220} height={120} alt="React JS" />
-          </div>
-          <h5 style={title}>CS1234 React JS</h5>
-          <p style={subtitle}>Full Stack Software Developer</p>
-        </Link>
-
-   
-        <Link href="/Courses/CS5610" style={card}>
-          <div style={thumbWrap}>
-            <Image src="/next.svg" width={220} height={120} alt="Next.js Web Development" />
-          </div>
-          <h5 style={title}>CS5610 Next.js Web Development</h5>
-          <p style={subtitle}>App Router, Routing, Deployment</p>
-        </Link>
-
-        <Link href="/Courses/CS1100" style={card}>
-          <div style={thumbWrap}>
-            <Image src="/HTML.png" width={220} height={120} alt="HTML & CSS" />
-          </div>
-          <h5 style={title}>CS1100 HTML &amp; CSS</h5>
-          <p style={subtitle}>Semantic HTML, Lists, Tables, Forms</p>
-        </Link>
-
-       
-        <Link href="/Courses/CS2000" style={card}>
-          <div style={thumbWrap}>
-            <Image src="/JS.png" width={220} height={120} alt="JavaScript Fundamentals" />
-          </div>
-          <h5 style={title}>CS2000 JavaScript Fundamentals</h5>
-          <p style={subtitle}>Syntax, DOM, Events</p>
-        </Link>
-
-       
-        <Link href="/Courses/CS3200" style={card}>
-          <div style={thumbWrap}>
-            <Image src="/database.jpg" width={220} height={120} alt="Databases" />
-          </div>
-          <h5 style={title}>CS3200 Databases</h5>
-          <p style={subtitle}>SQL, ER Modeling, Joins</p>
-        </Link>
-
-      
-        <Link href="/Courses/CS4500" style={card}>
-          <div style={thumbWrap}>
-            <Image src="/devops.svg" width={220} height={120} alt="DevOps Foundations" />
-          </div>
-          <h5 style={title}>CS4500 DevOps Foundations</h5>
-          <p style={subtitle}>CI/CD, Containers, Cloud Basics</p>
-        </Link>
+        <Row className="g-4">
+          {courses.map((course) => (
+            <Col
+              key={course.id}
+              xs={12}
+              sm={6}
+              lg={4}
+              xl={3}
+              className="d-flex align-items-stretch"
+            >
+              <Link
+                href={`/Courses/${course.id}/Home`}
+                className="wd-dashboard-course-link text-decoration-none text-dark w-100"
+              >
+                <Card className="h-100 shadow-sm">
+                  <CardImg
+                    variant="top"
+                    src={course.image}
+                    alt={`${course.code} thumbnail`}
+                    style={{
+                      width: "100%",
+                      height: 160,
+                      objectFit: "cover",
+                      borderTopLeftRadius: 6,
+                      borderTopRightRadius: 6,
+                    }}
+                  />
+                  <CardBody style={{ minHeight: 130 }}>
+                    <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                      {course.code} {course.title}
+                    </CardTitle>
+                    <CardText
+                      className="wd-dashboard-course-description overflow-hidden mb-3"
+                      style={{ height: 48, lineHeight: 1.2 }}
+                    >
+                      {course.description}
+                    </CardText>
+                    <span
+                      className="d-inline-flex align-items-center justify-content-center"
+                      style={{
+                        width: 36,
+                        height: 32,
+                        borderRadius: 8,
+                        border: "1px solid rgba(0,0,0,0.12)",
+                        background: "#fff",
+                        color: "#6c757d",
+                      }}
+                      title={`Open ${course.code}`}
+                      aria-label="Edit course"
+                    >
+                      <LuNotebookPen />
+                    </span>
+                  </CardBody>
+                </Card>
+              </Link>
+            </Col>
+          ))}
+        </Row>
       </div>
     </div>
   );
 }
+
+const courses = [
+  {
+    id: "1234",
+    code: "CS1234",
+    title: "React JS",
+    description: "Full Stack software developer",
+    image: "/reactjs.jpg",
+  },
+  {
+    id: "CS5610",
+    code: "CS5610",
+    title: "Next.js Web Development",
+    description: "App Router, Routing, Deployment",
+    image: "/next.jpg",
+  },
+  {
+    id: "CS1100",
+    code: "CS1100",
+    title: "HTML & CSS",
+    description: "Semantic HTML, Lists, Tables, Forms",
+    image: "/HTML.png",
+  },
+  {
+    id: "CS2000",
+    code: "CS2000",
+    title: "JavaScript Fundamentals",
+    description: "Syntax, DOM, Events",
+    image: "/js.png",
+  },
+  {
+    id: "CS3200",
+    code: "CS3200",
+    title: "Databases",
+    description: "SQL, ER Modeling, Joins",
+    image: "/database.jpg",
+  },
+  {
+    id: "CS4500",
+    code: "CS4500",
+    title: "DevOps Foundations",
+    description: "CI/CD, Containers, Cloud Basics",
+    image: "/devops.svg",
+  },
+  {
+    id: "CS600",
+    code: "CS600",
+    title: "Data Structure and Algorithms",
+    description: "Data Structure and Algorithms",
+    image: "/dsa.png",
+  },
+];

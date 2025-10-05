@@ -1,55 +1,59 @@
+import { MdDoNotDisturbAlt } from "react-icons/md";
+import {
+  FaCheckCircle,
+  FaBell,
+  FaChartBar,
+  FaBullhorn,
+  FaHome,
+  FaStream,
+} from "react-icons/fa";
+import { BiImport } from "react-icons/bi";
+import { LiaFileImportSolid } from "react-icons/lia";
+import { Button } from "react-bootstrap";
+
 export default function CourseStatus() {
-  const box: React.CSSProperties = {
-    maxWidth: 640,
-    margin: "16px auto",
-    padding: 16,
-    border: "1px solid #ddd",
-    borderRadius: 8,
-    boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-    background: "#fff",
-  };
-  const group: React.CSSProperties = {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "8px",
-    marginTop: 8,
-  };
-
   return (
-    <section
+    <div
       id="wd-course-status"
-      aria-labelledby="wd-course-status-title"
-      style={box}
+      className="d-none d-lg-block"
+      style={{ width: "350px" }}
     >
-      <h2 id="wd-course-status-title" style={{ marginTop: 0, marginBottom: 8 }}>
-        Course Status
-      </h2>
+      <h2>Course Status</h2>
 
-    
-      <div style={group}>
-        <button type="button" aria-pressed="false">
-          Unpublish
-        </button>
-        <button type="button" aria-pressed="true">
-          Publish
-        </button>
+      <div className="d-flex mb-3">
+        <div className="w-50 pe-1">
+          <Button variant="secondary" size="lg" className="w-100 text-nowrap">
+            <MdDoNotDisturbAlt className="me-2 fs-5" /> Unpublish
+          </Button>
+        </div>
+        <div className="w-50">
+          <Button variant="success" size="lg" className="w-100">
+            <FaCheckCircle className="me-2 fs-5" /> Publish
+          </Button>
+        </div>
       </div>
 
-  
-      <div style={{ ...group, marginTop: 12 }}>
-        <button type="button">Import Existing Content</button>
-        <button type="button">Import From Commons</button>
-        <button type="button">Choose Home Page</button>
-      </div>
-
-     
-      <div aria-label="Course tools" style={{ ...group, marginTop: 12 }}>
-        <button type="button">View Course Stream</button>
-        <button type="button">New Announcement</button>
-        <button type="button">New Analytics</button>
-        <button type="button">View Course Calendar</button>
-        <button type="button">View Course Notifications</button>
-      </div>
-    </section>
+      <Button variant="secondary" size="lg" className="w-100 mt-1 text-start">
+        <BiImport className="me-2 fs-5" /> Import Existing Content
+      </Button>
+      <Button variant="secondary" size="lg" className="w-100 mt-1 text-start">
+        <LiaFileImportSolid className="me-2 fs-5" /> Import from Commons
+      </Button>
+      <Button variant="secondary" size="lg" className="w-100 mt-1 text-start">
+        <FaHome className="me-2 fs-5" /> Choose Home Page
+      </Button>
+      <Button variant="secondary" size="lg" className="w-100 mt-1 text-start">
+        <FaStream className="me-2 fs-5" /> View Course Stream
+      </Button>
+      <Button variant="secondary" size="lg" className="w-100 mt-1 text-start">
+        <FaBullhorn className="me-2 fs-5" /> New Announcement
+      </Button>
+      <Button variant="secondary" size="lg" className="w-100 mt-1 text-start">
+        <FaChartBar className="me-2 fs-5" /> New Analytics
+      </Button>
+      <Button variant="secondary" size="lg" className="w-100 mt-1 text-start">
+        <FaBell className="me-2 fs-5" /> View Course Notifications
+      </Button>
+    </div>
   );
 }
