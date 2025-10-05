@@ -121,7 +121,7 @@ const courses = [
     code: "CS2000",
     title: "JavaScript Fundamentals",
     description: "Syntax, DOM, Events",
-    image: "/js.png",
+    image: "/javascript.png",
   },
   {
     id: "CS3200",
