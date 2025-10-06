@@ -18,12 +18,23 @@ export default function Dashboard() {
       id="wd-dashboard"
       style={{ padding: "20px 16px 40px 140px", overflowX: "hidden" }}
     >
-       <style>{`
-    @media (max-width: 767.98px) {
-      #wd-dashboard { padding-left: 0 !important; }
-    }
-  `}</style>
-      <div className="container-xl px-2">
+      <style>{`
+        /* Remove left padding on phones */
+        @media (max-width: 767.98px) {
+          #wd-dashboard { padding-left: 0 !important; }
+        }
+
+        /* On very large screens (4K and similar), make 5 columns */
+        @media (min-width: 1920px) {
+          .wd-col-5xl {
+            flex: 0 0 20%;
+            max-width: 20%;
+          }
+        }
+      `}</style>
+
+      {/* Full width container on big screens so grid spans entire viewport */}
+      <div className="container-fluid px-2">
         <h1 id="wd-dashboard-title">Dashboard</h1>
         <hr />
         <h2 id="wd-dashboard-published">
@@ -35,11 +46,12 @@ export default function Dashboard() {
           {courses.map((course) => (
             <Col
               key={course.id}
-              xs={12}
-              sm={6}
-              lg={4}
-              xl={3}
-              className="d-flex align-items-stretch"
+              xs={12}  /* 1 per row on mobile */
+              sm={6}   /* 2 per row */
+              md={6}   /* 2 per row */
+              lg={4}   /* 3 per row */
+              xl={3}   /* 4 per row */
+              className="d-flex align-items-stretch wd-col-5xl" /* 5 per row ≥1920px */
             >
               <Link
                 href={`/Courses/${course.id}/Home`}
@@ -95,53 +107,11 @@ export default function Dashboard() {
 }
 
 const courses = [
-  {
-    id: "1234",
-    code: "CS1234",
-    title: "React JS",
-    description: "Full Stack software developer",
-    image: "/reactjs.jpg",
-  },
-  {
-    id: "CS5610",
-    code: "CS5610",
-    title: "Next.js Web Development",
-    description: "App Router, Routing, Deployment",
-    image: "/next.jpg",
-  },
-  {
-    id: "CS1100",
-    code: "CS1100",
-    title: "HTML & CSS",
-    description: "Semantic HTML, Lists, Tables, Forms",
-    image: "/HTML.png",
-  },
-  {
-    id: "CS2000",
-    code: "CS2000",
-    title: "JavaScript Fundamentals",
-    description: "Syntax, DOM, Events",
-    image: "/javascript.png",
-  },
-  {
-    id: "CS3200",
-    code: "CS3200",
-    title: "Databases",
-    description: "SQL, ER Modeling, Joins",
-    image: "/database.jpg",
-  },
-  {
-    id: "CS4500",
-    code: "CS4500",
-    title: "DevOps Foundations",
-    description: "CI/CD, Containers, Cloud Basics",
-    image: "/devops.svg",
-  },
-  {
-    id: "CS600",
-    code: "CS600",
-    title: "Data Structure and Algorithms",
-    description: "Data Structure and Algorithms",
-    image: "/dsa.png",
-  },
+  { id: "1234", code: "CS1234", title: "React JS", description: "Full Stack software developer", image: "/reactjs.jpg" },
+  { id: "CS5610", code: "CS5610", title: "Next.js Web Development", description: "App Router, Routing, Deployment", image: "/next.jpg" },
+  { id: "CS1100", code: "CS1100", title: "HTML & CSS", description: "Semantic HTML, Lists, Tables, Forms", image: "/HTML.png" },
+  { id: "CS2000", code: "CS2000", title: "JavaScript Fundamentals", description: "Syntax, DOM, Events", image: "/javascript.png" },
+  { id: "CS3200", code: "CS3200", title: "Databases", description: "SQL, ER Modeling, Joins", image: "/database.jpg" },
+  { id: "CS4500", code: "CS4500", title: "DevOps Foundations", description: "CI/CD, Containers, Cloud Basics", image: "/devops.svg" },
+  { id: "CS600", code: "CS600", title: "Data Structure and Algorithms", description: "Data Structure and Algorithms", image: "/dsa.png" },
 ];
