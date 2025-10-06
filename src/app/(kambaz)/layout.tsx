@@ -1,7 +1,7 @@
-// app/(Kambaz)/layout.tsx
+
 import { ReactNode } from "react";
 import KambazNavigation from "./Navigation";
-import "./styles.css"; // keep it, but we won't rely on the .wd-main-content-offset rule
+import "./styles.css"; 
 
 export default function KambazLayout({
   children,

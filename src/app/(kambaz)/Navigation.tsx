@@ -179,7 +179,7 @@ export default function KambazNavigation() {
           </div>
 
           <div className="d-flex flex-column px-4 py-3" style={{ gap: 18 }}>
-            {/* Account dropdown (mobile) */}
+            
             <button
               onClick={() => setMobileAccountOpen((s) => !s)}
               className="btn d-flex align-items-center justify-content-between px-0"
@@ -228,7 +228,7 @@ export default function KambazNavigation() {
               </div>
             )}
 
-            {/* The rest of the items (unchanged) */}
+            
             {items
               .filter((it) => it.id !== "account")
               .map((it) => {
