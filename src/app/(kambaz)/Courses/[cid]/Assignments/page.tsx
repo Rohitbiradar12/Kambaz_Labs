@@ -9,7 +9,7 @@ import {
   ListGroup,
   Badge,
 } from "react-bootstrap";
-import { FiSearch } from "react-icons/fi";
+import { BiSearch } from "react-icons/bi";
 import {
   FaPlus,
   FaGripVertical,
@@ -21,33 +21,28 @@ import {
 export default function Assignments() {
   return (
     <div id="wd-assignments" className="pt-2">
-      {/* Toolbar */}
-      <div className="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2 mb-3">
-        <InputGroup className="flex-grow-1">
-          <InputGroup.Text className="bg-white">
-            <FiSearch />
-          </InputGroup.Text>
-          <Form.Control
-            id="wd-search-assignment"
-            placeholder="Search for Assignments"
+      <div className="d-flex align-items-center gap-2 mb-3">
+        <div className="flex-grow-1 position-relative">
+          <BiSearch
+            className="position-absolute top-50 translate-middle-y ms-2 text-secondary"
+            size={18}
           />
-        </InputGroup>
-
-        <div className="d-flex w-100 w-sm-auto">
-          <ButtonGroup className="ms-sm-auto w-100">
-            <Button id="wd-add-assignment-group" variant="secondary" className="w-50 w-sm-auto">
-              <FaPlus className="me-2" />
-              Group
-            </Button>
-            <Button id="wd-add-assignment" variant="danger" className="w-50 w-sm-auto">
-              <FaPlus className="me-2" />
-              Assignment
-            </Button>
-          </ButtonGroup>
+          <input
+            type="text"
+            id="wd-search-assignment"
+            placeholder="Search..."
+            className="form-control ps-5 shadow-sm"
+          />
         </div>
+
+        <button id="wd-add-assignment-group" className="btn btn-secondary px-3">
+          + Group
+        </button>
+        <button id="wd-add-assignment" className="btn btn-danger px-3">
+          + Assignment
+        </button>
       </div>
 
-      {/* Section header row */}
       <div
         className="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between border rounded-1 bg-light px-2 py-2 mb-2"
         aria-label="Assignments section header"
@@ -78,7 +73,6 @@ export default function Assignments() {
         </div>
       </div>
 
-      {/* Assignment rows */}
       <ListGroup id="wd-assignment-list" className="rounded-0">
         <AssignmentRow
           href="/Courses/1234/Assignments/123"
@@ -109,7 +103,6 @@ export default function Assignments() {
   );
 }
 
-/* Single assignment row */
 function AssignmentRow({
   href,
   title,
@@ -128,7 +121,6 @@ function AssignmentRow({
   return (
     <ListGroup.Item className="p-0 border-0">
       <div className="d-flex align-items-stretch border-top border-bottom bg-white">
-
         <div
           className="d-flex align-items-center"
           style={{ borderLeft: "3px solid #198754" }}
