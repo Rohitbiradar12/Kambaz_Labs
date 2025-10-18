@@ -1,5 +1,8 @@
 import type { ReactNode } from "react";
 import CourseNavigation from "./Navigation";
+import { courses } from "../../Database";
+import { FaAlignJustify } from "react-icons/fa6";
+import Breadcrumb from "./Breadcrumb";
 
 export default async function CoursesLayout({
   children,
@@ -9,6 +12,7 @@ export default async function CoursesLayout({
   params: Promise<{ cid: string }>;
 }) {
   const { cid } = await params;
+  const course = courses.find((course) => course._id === cid);
 
   return (
     <div id="wd-courses">
@@ -23,7 +27,13 @@ export default async function CoursesLayout({
         }
       `}</style>
 
-      <h2 className="mb-2">Course {cid}</h2>
+      <div className="d-flex align-items-center gap-3">
+        <FaAlignJustify className="text-danger" style={{ fontSize: 28 }} />
+        <h2 className="text-danger fw m-0">
+          <Breadcrumb course={{ name: course?.name ?? "" }} />
+        </h2>
+      </div>
+
       <hr className="mt-2" />
 
       <div className="d-flex gap-4">

@@ -31,7 +31,7 @@ export default function KambazNavigation() {
   const cid = courseMatch?.[1] ?? null;
   const onCourse = !!cid;
 
-  const items: NavItem[] = [
+  const navLinks: NavItem[] = [
     {
       id: "account",
       href: "/Account",
@@ -51,8 +51,8 @@ export default function KambazNavigation() {
       textActive: "text-danger",
     },
     {
-      id: "/Courses/1234/Home",
-      href: "/Courses/1234/Home",
+      id: "/Courses/RS101/Home",
+      href: "/Courses/RS101/Home",
       label: "Courses",
       iconInactive: <LiaBookSolid className="fs-3 text-danger" />,
       iconActive: <LiaBookSolid className="fs-3 text-danger" />,
@@ -135,7 +135,7 @@ export default function KambazNavigation() {
           <img src="/NEU.png" width={70} alt="Northeastern University" />
         </ListGroupItem>
 
-        {items.map((it) => {
+        {navLinks.map((it) => {
           const active = isActive(it.href);
           const bg = active ? "bg-white" : "bg-black";
           const text = active ? it.textActive : it.textInactive;
@@ -229,7 +229,7 @@ export default function KambazNavigation() {
             )}
 
             
-            {items
+            {navLinks
               .filter((it) => it.id !== "account")
               .map((it) => {
                 const active = isActive(it.href);

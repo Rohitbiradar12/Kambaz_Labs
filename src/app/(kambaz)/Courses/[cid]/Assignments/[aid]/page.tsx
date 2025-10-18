@@ -1,4 +1,13 @@
+"use client";
+
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import * as db from "../../../../Database";
+
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams() as { cid: string; aid: string };
+  const assignment = (db.assignments as any[]).find((a) => a._id === aid);
+
   return (
     <div
       id="wd-assignments-editor"
@@ -72,7 +81,11 @@ export default function AssignmentEditor() {
         <div className="span-full">
           <div className="stacked">
             <label htmlFor="wd-name" className="row-label left">Assignment Name</label>
-            <input id="wd-name" defaultValue="A1" className="form-control" />
+            <input
+              id="wd-name"
+              defaultValue={assignment?.title ?? ""}
+              className="form-control"
+            />
           </div>
         </div>
       </div>
@@ -83,17 +96,8 @@ export default function AssignmentEditor() {
             <p style={{ marginBottom: 8 }}>
               The assignment is <span className="text-danger">available online</span>.
             </p>
-            <p style={{ marginBottom: 8 }}>
-              Submit a link to the landing page of your Web application running on Vercel.
-            </p>
-            <ul style={{ marginBottom: 8 }}>
-              <li>Your full name and section</li>
-              <li>Links to each of the lab assignments</li>
-              <li>Link to the Kanbas application</li>
-              <li>Links to all relevant source code repositories</li>
-            </ul>
             <p style={{ margin: 0 }}>
-              The Kanbas application should include a link to navigate back to the landing page.
+              {assignment?.description ?? ""}
             </p>
           </div>
         </div>
@@ -103,7 +107,11 @@ export default function AssignmentEditor() {
         <label htmlFor="wd-points" className="row-label">Points</label>
         <div className="field-col">
           <div className="plain-field">
-            <input id="wd-points" defaultValue={100} className="form-control" />
+            <input
+              id="wd-points"
+              defaultValue={assignment?.points ?? 0}
+              className="form-control"
+            />
           </div>
         </div>
       </div>
@@ -190,17 +198,32 @@ export default function AssignmentEditor() {
 
             <div className="stacked mb-3">
               <label htmlFor="wd-due-date" className="fw-semibold">Due</label>
-              <input type="datetime-local" id="wd-due-date" defaultValue="2024-05-13T23:59" className="form-control" />
+              <input
+                type="datetime-local"
+                id="wd-due-date"
+                defaultValue={assignment?.due ?? ""}
+                className="form-control"
+              />
             </div>
 
             <div className="two-cols">
               <div className="stacked">
                 <label htmlFor="wd-available-from" className="fw-semibold">Available from</label>
-                <input type="datetime-local" id="wd-available-from" defaultValue="2024-05-06T00:00" className="form-control" />
+                <input
+                  type="datetime-local"
+                  id="wd-available-from"
+                  defaultValue={assignment?.available ?? ""}
+                  className="form-control"
+                />
               </div>
               <div className="stacked">
                 <label htmlFor="wd-available-until" className="fw-semibold">Until</label>
-                <input type="datetime-local" id="wd-available-until" defaultValue="2024-05-28T23:59" className="form-control" />
+                <input
+                  type="datetime-local"
+                  id="wd-available-until"
+                  defaultValue={assignment?.until ?? ""}
+                  className="form-control"
+                />
               </div>
             </div>
           </div>
@@ -209,8 +232,8 @@ export default function AssignmentEditor() {
 
       <hr />
       <div className="actions mt-3">
-        <button className="btn btn-light">Cancel</button>
-        <button className="btn btn-danger">Save</button>
+        <Link href={`/Courses/${cid}/Assignments`} className="btn btn-light">Cancel</Link>
+        <Link href={`/Courses/${cid}/Assignments`} className="btn btn-danger">Save</Link>
       </div>
     </div>
   );

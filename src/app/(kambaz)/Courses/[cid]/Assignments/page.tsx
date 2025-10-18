@@ -3,9 +3,6 @@
 import Link from "next/link";
 import {
   Button,
-  ButtonGroup,
-  Form,
-  InputGroup,
   ListGroup,
   Badge,
 } from "react-bootstrap";
@@ -17,8 +14,25 @@ import {
   FaEllipsisV,
   FaChevronDown,
 } from "react-icons/fa";
+import { MdAssignment } from "react-icons/md";
+import { useParams } from "next/navigation";
+import * as db from "../../../Database";
+
+function fmtDateTime(dt: string) {
+  const d = new Date(dt);
+  const month = d.toLocaleString("en-US", { month: "short" });
+  const day = d.getDate();
+  let hours = d.getHours();
+  const minutes = d.getMinutes().toString().padStart(2, "0");
+  const ampm = hours >= 12 ? "pm" : "am";
+  hours = hours % 12 || 12;
+  return `${month} ${day} at ${hours}:${minutes} ${ampm}`;
+}
 
 export default function Assignments() {
+  const { cid } = useParams();
+  const assignments = db.assignments.filter((a: any) => a.course === cid);
+
   return (
     <div id="wd-assignments" className="pt-2">
       <div className="d-flex align-items-center gap-2 mb-3">
@@ -74,30 +88,17 @@ export default function Assignments() {
       </div>
 
       <ListGroup id="wd-assignment-list" className="rounded-0">
-        <AssignmentRow
-          href="/Courses/1234/Assignments/123"
-          title="A1 – ENV + HTML"
-          subTop="Multiple Modules"
-          subMidStrong="Not available until"
-          subMidTail=" May 6 at 12:00 am"
-          subBot="Due May 13 at 11:59 pm | 100 pts"
-        />
-        <AssignmentRow
-          href="/Courses/1234/Assignments/124"
-          title="A2 – CSS + Bootstrap"
-          subTop="Multiple Modules"
-          subMidStrong="Available from"
-          subMidTail=" May 13"
-          subBot="Due May 20 at 11:59 pm | 100 pts"
-        />
-        <AssignmentRow
-          href="/Courses/1234/Assignments/125"
-          title="A3 – JavaScript + DOM"
-          subTop="Multiple Modules"
-          subMidStrong="Available from"
-          subMidTail=" May 20"
-          subBot="Due May 27 at 11:59 pm | 100 pts"
-        />
+        {assignments.map((a: any) => (
+          <AssignmentRow
+            key={a._id}
+            href={`/Courses/${cid}/Assignments/${a._id}`}
+            title={a.title}
+            subTop="Multiple Modules"
+            subMidStrong="Available from"
+            subMidTail={` ${fmtDateTime(a.available)}`}
+            subBot={`Due ${fmtDateTime(a.due)} | ${a.points} pts`}
+          />
+        ))}
       </ListGroup>
     </div>
   );
@@ -132,13 +133,17 @@ function AssignmentRow({
         <div className="flex-grow-1 py-3 px-3">
           <div className="d-flex flex-column flex-sm-row align-items-start justify-content-between gap-3">
             <div className="min-w-0">
-              <Link
-                href={href}
-                className="fw-semibold text-decoration-none text-dark d-inline-block mb-1"
-                style={{ fontSize: 18 }}
-              >
-                {title}
-              </Link>
+              {/* Assignment icon before the title (no CSS changes) */}
+              <div className="d-inline-flex align-items-center mb-1" style={{ fontSize: 18 }}>
+                <MdAssignment className="me-2 fs-5 text-secondary" aria-hidden />
+                <Link
+                  href={href}
+                  className="fw-semibold text-decoration-none text-dark d-inline-block"
+                  style={{ fontSize: 18 }}
+                >
+                  {title}
+                </Link>
+              </div>
 
               <div className="small text-wrap">
                 <span className="text-danger fw-semibold">{subTop}</span>
