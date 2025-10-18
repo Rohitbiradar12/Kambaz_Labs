@@ -2,14 +2,28 @@
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
 import ModulesControls from "./ModulesControls";
-import ModuleControlButtons from "./ModulesControls";
 import LessonControlButtons from "./LessonControlButtons";
 import { useParams } from "next/navigation";
 import * as db from "../../../Database";
 
+type Lesson = {
+  _id: string;
+  name: string;
+  description?: string;
+  module: string;
+};
+
+type ModuleItem = {
+  _id: string;
+  name: string;
+  description?: string;
+  course: string;
+  lessons?: Lesson[];
+};
+
 export default function Modules() {
-  const { cid } = useParams();
-  const modules = db.modules;
+  const { cid } = useParams<{ cid: string }>();
+  const modules = (db.modules as unknown as ModuleItem[]);
 
   return (
     <div>
@@ -20,8 +34,8 @@ export default function Modules() {
 
       <ListGroup className="rounded-0" id="wd-modules">
         {modules
-          .filter((module: any) => module.course === cid)
-          .map((module: any) => (
+          .filter((module) => module.course === cid)
+          .map((module) => (
             <ListGroupItem
               key={module._id ?? module.name}
               className="wd-module p-0 mb-5 fs-5 border-gray"
@@ -34,7 +48,7 @@ export default function Modules() {
 
               {module.lessons && (
                 <ListGroup className="wd-lessons rounded-0">
-                  {module.lessons.map((lesson: any) => (
+                  {module.lessons.map((lesson) => (
                     <ListGroupItem
                       key={lesson._id ?? lesson.name}
                       className="wd-lesson p-3 ps-1 d-flex justify-content-between align-items-center"

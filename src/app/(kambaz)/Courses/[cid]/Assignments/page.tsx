@@ -1,11 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  Button,
-  ListGroup,
-  Badge,
-} from "react-bootstrap";
+import { Button, ListGroup, Badge } from "react-bootstrap";
 import { BiSearch } from "react-icons/bi";
 import {
   FaPlus,
@@ -17,6 +13,17 @@ import {
 import { MdAssignment } from "react-icons/md";
 import { useParams } from "next/navigation";
 import * as db from "../../../Database";
+
+type Assignment = {
+  _id: string;
+  title: string;
+  description: string;
+  course: string;
+  available: string; // ISO "YYYY-MM-DDTHH:mm"
+  due: string;       // ISO
+  until: string;     // ISO
+  points: number;
+};
 
 function fmtDateTime(dt: string) {
   const d = new Date(dt);
@@ -30,8 +37,10 @@ function fmtDateTime(dt: string) {
 }
 
 export default function Assignments() {
-  const { cid } = useParams();
-  const assignments = db.assignments.filter((a: any) => a.course === cid);
+  const { cid } = useParams<{ cid: string }>();
+  const assignments = (db.assignments as unknown as Assignment[]).filter(
+    (a) => a.course === cid
+  );
 
   return (
     <div id="wd-assignments" className="pt-2">
@@ -88,7 +97,7 @@ export default function Assignments() {
       </div>
 
       <ListGroup id="wd-assignment-list" className="rounded-0">
-        {assignments.map((a: any) => (
+        {assignments.map((a) => (
           <AssignmentRow
             key={a._id}
             href={`/Courses/${cid}/Assignments/${a._id}`}
@@ -133,7 +142,6 @@ function AssignmentRow({
         <div className="flex-grow-1 py-3 px-3">
           <div className="d-flex flex-column flex-sm-row align-items-start justify-content-between gap-3">
             <div className="min-w-0">
-              
               <div className="d-inline-flex align-items-center mb-1" style={{ fontSize: 18 }}>
                 <MdAssignment className="me-2 fs-5 text-secondary" aria-hidden />
                 <Link

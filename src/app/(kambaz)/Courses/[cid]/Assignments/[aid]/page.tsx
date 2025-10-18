@@ -1,12 +1,26 @@
+// app/(kambaz)/Courses/[cid]/Assignments/[aid]/page.tsx
 "use client";
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import * as db from "../../../../Database";
 
+type Assignment = {
+  _id: string;
+  title: string;
+  description: string;
+  course: string;
+  available: string; 
+  due: string;       
+  until: string;     
+  points: number;
+};
+
 export default function AssignmentEditor() {
-  const { cid, aid } = useParams() as { cid: string; aid: string };
-  const assignment = (db.assignments as any[]).find((a) => a._id === aid);
+  const { cid, aid } = useParams<{ cid: string; aid: string }>();
+
+  const assignments = db.assignments as unknown as Assignment[];
+  const assignment = assignments.find((a) => a._id === aid);
 
   return (
     <div
@@ -14,59 +28,25 @@ export default function AssignmentEditor() {
       style={{ padding: "16px 24px", maxWidth: 960, margin: "0 auto" }}
     >
       <style>{`
-        :root {
-          --label-col: 220px;
-          --field-col: 560px;
-        }
-
-        .form-row {
-          display: grid;
-          grid-template-columns: var(--label-col) var(--field-col);
-          align-items: start;
-          column-gap: 12px;
-          row-gap: 12px;
-        }
+        :root { --label-col: 220px; --field-col: 560px; }
+        .form-row { display: grid; grid-template-columns: var(--label-col) var(--field-col); align-items: start; column-gap: 12px; row-gap: 12px; }
         .row-span > .span-full { grid-column: 1 / -1; width: 100%; }
         .row-label { text-align: right; font-weight: 400; margin: 0; line-height: 1.2; color:#111; }
         .row-label.left { text-align: left; }
         .field-col { display: flex; align-items: center; }
-
-        .panel {
-          width: 100%;
-          border: 1px solid rgba(0,0,0,0.1);
-          border-radius: 6px;
-          background: #fff;
-          padding: 12px;
-          box-sizing: border-box;
-        }
+        .panel { width: 100%; border: 1px solid rgba(0,0,0,0.1); border-radius: 6px; background: #fff; padding: 12px; box-sizing: border-box; }
         .panel-muted { background: #f6f7f8; }
-
         .stacked { display: flex; flex-direction: column; gap: 6px; }
         .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
         .actions { display: flex; justify-content: flex-end; gap: 8px; }
-
         .plain-field { width: 100%; }
-        .plain-field .form-control,
-        .plain-field .form-select { width: 100%; }
-
-        .panel .form-control,
-        .panel .form-select,
-        .panel input[type="text"],
-        .panel input[type="number"],
-        .panel input[type="datetime-local"],
-        .panel select { width: 100%; }
-
+        .plain-field .form-control, .plain-field .form-select { width: 100%; }
+        .panel .form-control, .panel .form-select, .panel input[type="text"], .panel input[type="number"], .panel input[type="datetime-local"], .panel select { width: 100%; }
         @media (max-width: 992px) {
           #wd-assignments-editor { padding-left: 16px; padding-right: 16px; }
-          :root{
-            --label-col: clamp(140px, 22vw, 200px);
-            --field-col: minmax(0, 1fr);
-          }
-          .form-row {
-            grid-template-columns: var(--label-col) 1fr;
-          }
+          :root{ --label-col: clamp(140px, 22vw, 200px); --field-col: minmax(0, 1fr); }
+          .form-row { grid-template-columns: var(--label-col) 1fr; }
         }
-
         @media (max-width: 768px) {
           .form-row { grid-template-columns: 1fr; }
           .row-label { text-align: left; }
@@ -109,7 +89,7 @@ export default function AssignmentEditor() {
           <div className="plain-field">
             <input
               id="wd-points"
-              defaultValue={assignment?.points ?? 0}
+              defaultValue={String(assignment?.points ?? 0)}
               className="form-control"
             />
           </div>

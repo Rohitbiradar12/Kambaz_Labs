@@ -13,8 +13,18 @@ import {
 import { LuNotebookPen } from "react-icons/lu";
 import * as db from "../Database";
 
+type Course = {
+  _id: string;
+  number?: string;
+  code?: string;  
+  name?: string;   
+  title?: string;  
+  description?: string;
+  image: string;
+};
+
 export default function Dashboard() {
-  const courses = db.courses as Array<any>;
+  const courses = db.courses as Course[];
 
 
   return (
