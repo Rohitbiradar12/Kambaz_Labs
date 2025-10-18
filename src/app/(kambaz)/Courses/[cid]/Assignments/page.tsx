@@ -133,7 +133,7 @@ function AssignmentRow({
         <div className="flex-grow-1 py-3 px-3">
           <div className="d-flex flex-column flex-sm-row align-items-start justify-content-between gap-3">
             <div className="min-w-0">
-              {/* Assignment icon before the title (no CSS changes) */}
+              
               <div className="d-inline-flex align-items-center mb-1" style={{ fontSize: 18 }}>
                 <MdAssignment className="me-2 fs-5 text-secondary" aria-hidden />
                 <Link
