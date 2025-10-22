@@ -19,9 +19,9 @@ type Assignment = {
   title: string;
   description: string;
   course: string;
-  available: string; // ISO "YYYY-MM-DDTHH:mm"
-  due: string;       // ISO
-  until: string;     // ISO
+  available: string; 
+  due: string;       
+  until: string;     
   points: number;
 };
 
