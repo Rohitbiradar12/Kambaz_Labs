@@ -1,15 +1,18 @@
-
+"use client";
 import { ReactNode } from "react";
 import KambazNavigation from "./Navigation";
-import "./styles.css"; 
+import "./styles.css";
+import store from "./store";
+import { Provider } from "react-redux";
+import AuthHydrator from "./AuthHydrator";
 
 export default function KambazLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <div id="wd-kambaz">
-    
-      <style>{`
+    <Provider store={store}>
+      <div id="wd-kambaz">
+        <style>{`
         /* default: no left padding (mobile hides the sidebar) */
         #wd-kambaz .wd-content {
           padding-left: 0;
@@ -22,14 +25,14 @@ export default function KambazLayout({
         }
       `}</style>
 
-      <div className="d-flex">
-        <div>
-          <KambazNavigation />
+        <div className="d-flex">
+          <div>
+            <KambazNavigation />
+          </div>
+  
+          <div className="wd-content p-3 flex-fill"><AuthHydrator>{children}</AuthHydrator></div>
         </div>
-
-        
-        <div className="wd-content p-3 flex-fill">{children}</div>
       </div>
-    </div>
+    </Provider>
   );
 }

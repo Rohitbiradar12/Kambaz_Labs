@@ -1,65 +1,153 @@
+"use client";
+
 import Link from "next/link";
+import { redirect } from "next/dist/client/components/navigation";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { FormControl, Button } from "react-bootstrap";
+import * as db from "../../Database";
+import { setCurrentUser } from "../reducer";
 
 export default function Signin() {
+  const [credentials, setCredentials] = useState<{ username?: string; password?: string }>({});
+  const dispatch = useDispatch();
+
+  const signin = () => {
+    const user = (db as any).users.find(
+      (u: any) =>
+        u.username === credentials.username &&
+        u.password === credentials.password
+    );
+    if (!user) return;
+    dispatch(setCurrentUser(user));
+    redirect("/Dashboard");
+  };
+
+ 
+  const useCreds = (username: string, password: string) =>
+    setCredentials({ username, password });
+
   return (
-    <div
-      id="wd-signin-screen"
-      style={{
-        maxWidth: 300,
-        marginTop: 8,
-      }}
-    >
-      <h1 style={{ fontSize: 28, marginBottom: 12 }}>Signin</h1>
-
-      <input
-        placeholder="username"
-        className="wd-username"
-        style={{
-          width: "100%",
-          padding: "10px 12px",
-          border: "1px solid #d0d7de",
-          borderRadius: 8,
-          outline: "none",
-          marginBottom: 10,
-        }}
-      />
-
-      <input
-        placeholder="password"
-        type="password"
-        className="wd-password"
-        style={{
-          width: "100%",
-          padding: "10px 12px",
-          border: "1px solid #d0d7de",
-          borderRadius: 8,
-          outline: "none",
-          marginBottom: 12,
-        }}
-      />
-
-      <Link
-        href="Profile"
-        id="wd-signin-btn"
-        className="text-decoration-none"
-        style={{
-          display: "block",
-          width: "100%",
-          textAlign: "center",
-          padding: "10px 12px",
-          borderRadius: 8,
-          background: "#1a73e8",
-          color: "#fff",
-          fontWeight: 600,
-          marginBottom: 10,
-        }}
+    <div className="container-fluid p-0" style={{ paddingLeft: 0 }}>
+      <div
+        className="min-vh-100 d-flex align-items-center justify-content-center"
+        style={{ background: "linear-gradient(180deg, #f6f8fa 0%, #eef3ff 100%)" }}
       >
-        Signin
-      </Link>
+        <div className="w-100" style={{ maxWidth: 420 }}>
+          
+          <div className="text-center mb-4">
+            <div
+              className="d-inline-flex align-items-center justify-content-center rounded-4 mb-2 shadow-sm"
+              style={{ width: 64, height: 64, background: "#e9f2ff", color: "#1a73e8", fontWeight: 800 }}
+            >
+              KZ
+            </div>
+            <h1 className="h3 mb-1">Sign in to Kambaz</h1>
+            <p className="text-secondary mb-0">Welcome back! Please enter your details.</p>
+          </div>
 
-      <Link href="Signup" id="wd-signup-link">
-        Signup
-      </Link>
+          
+          <div className="card border-0 shadow rounded-4">
+            <div className="card-body p-4 p-md-5">
+              <label htmlFor="wd-username" className="form-label fw-semibold">
+                Username
+              </label>
+              <div className="input-group mb-3">
+                <FormControl
+                  id="wd-username"
+                  placeholder="username"
+                  className="border-start-0"
+                  value={credentials.username ?? ""}
+                  onChange={(e) =>
+                    setCredentials({ ...credentials, username: e.target.value })
+                  }
+                />
+              </div>
+
+              <label htmlFor="wd-password" className="form-label fw-semibold">
+                Password
+              </label>
+              <div className="input-group mb-3">
+                <FormControl
+                  id="wd-password"
+                  placeholder="password"
+                  type="password"
+                  className="border-start-0"
+                  value={credentials.password ?? ""}
+                  onChange={(e) =>
+                    setCredentials({ ...credentials, password: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className="d-flex align-items-center justify-content-between mb-4">
+                <div className="form-check">
+                  <input className="form-check-input" type="checkbox" id="remember" />
+                  <label className="form-check-label text-secondary" htmlFor="remember">
+                    Remember me
+                  </label>
+                </div>
+                <span className="small text-secondary">Forgot password?</span>
+              </div>
+
+              <Button
+                id="wd-signin-btn"
+                className="w-100 py-2 fw-semibold"
+                onClick={signin}
+                style={{ background: "#1a73e8" }}
+              >
+                Sign in
+              </Button>
+
+           
+              <div className="mt-4">
+                <div className="small text-secondary fw-semibold mb-2">Sample accounts</div>
+
+                <div className="border rounded-3 p-3 mb-2 bg-light">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div className="small">
+                      <div><strong>Student</strong></div>
+                      <div><code>"username": "thor_odinson"</code></div>
+                      <div><code>"password": "mjolnir123"</code></div>
+                    </div>
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary btn-sm"
+                      onClick={() => useCreds("thor_odinson", "mjolnir123")}
+                    >
+                      Use
+                    </button>
+                  </div>
+                </div>
+
+                <div className="border rounded-3 p-3 bg-light">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div className="small">
+                      <div><strong>Faculty</strong></div>
+                      <div><code>"username": "iron_man"</code></div>
+                      <div><code>"password": "stark123"</code></div>
+                    </div>
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary btn-sm"
+                      onClick={() => useCreds("iron_man", "stark123")}
+                    >
+                      Use
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-3">
+            <span className="text-secondary me-1">New to Kambaz?</span>
+            <Link id="wd-signup-link" href="/Account/Signup" className="fw-semibold text-decoration-none">
+              Create an account
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

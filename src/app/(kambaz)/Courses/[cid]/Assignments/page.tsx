@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Button, ListGroup, Badge } from "react-bootstrap";
+import { useState } from "react";
+import { Button, ListGroup, Badge, Modal } from "react-bootstrap";
 import { BiSearch } from "react-icons/bi";
 import {
   FaPlus,
@@ -9,21 +10,17 @@ import {
   FaCheckCircle,
   FaEllipsisV,
   FaChevronDown,
+  FaTrash,
+  FaPencilAlt, 
 } from "react-icons/fa";
 import { MdAssignment } from "react-icons/md";
-import { useParams } from "next/navigation";
-import * as db from "../../../Database";
-
-type Assignment = {
-  _id: string;
-  title: string;
-  description: string;
-  course: string;
-  available: string; 
-  due: string;       
-  until: string;     
-  points: number;
-};
+import { useParams, useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import {
+  deleteAssignment as deleteAssignmentAction,
+  type Assignment,
+} from "../Assignments/reducer";
 
 function fmtDateTime(dt: string) {
   const d = new Date(dt);
@@ -38,9 +35,36 @@ function fmtDateTime(dt: string) {
 
 export default function Assignments() {
   const { cid } = useParams<{ cid: string }>();
-  const assignments = (db.assignments as unknown as Assignment[]).filter(
-    (a) => a.course === cid
-  );
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { assignments } = useSelector((s: RootState) => s.assignmentsReducer);
+  const { currentUser } = useSelector((s: RootState) => s.accountReducer);
+  const isStudent = currentUser?.role === "STUDENT";
+
+  const courseAssignments = assignments.filter((a) => a.course === cid);
+
+
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
+
+  const askDelete = (id: string) => {
+    setPendingDeleteId(id);
+    setConfirmOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (pendingDeleteId) {
+      dispatch(deleteAssignmentAction(pendingDeleteId));
+    }
+    setConfirmOpen(false);
+    setPendingDeleteId(null);
+  };
+
+  const cancelDelete = () => {
+    setConfirmOpen(false);
+    setPendingDeleteId(null);
+  };
+  
 
   return (
     <div id="wd-assignments" className="pt-2">
@@ -58,12 +82,20 @@ export default function Assignments() {
           />
         </div>
 
-        <button id="wd-add-assignment-group" className="btn btn-secondary px-3">
-          + Group
-        </button>
-        <button id="wd-add-assignment" className="btn btn-danger px-3">
-          + Assignment
-        </button>
+        {!isStudent && (
+          <>
+            <button id="wd-add-assignment-group" className="btn btn-secondary px-3">
+              + Group
+            </button>
+            <button
+              id="wd-add-assignment"
+              className="btn btn-danger px-3"
+              onClick={() => router.push(`/Courses/${cid}/Assignments/new`)}
+            >
+              + Assignment
+            </button>
+          </>
+        )}
       </div>
 
       <div
@@ -97,7 +129,7 @@ export default function Assignments() {
       </div>
 
       <ListGroup id="wd-assignment-list" className="rounded-0">
-        {assignments.map((a) => (
+        {courseAssignments.map((a) => (
           <AssignmentRow
             key={a._id}
             href={`/Courses/${cid}/Assignments/${a._id}`}
@@ -106,9 +138,30 @@ export default function Assignments() {
             subMidStrong="Available from"
             subMidTail={` ${fmtDateTime(a.available)}`}
             subBot={`Due ${fmtDateTime(a.due)} | ${a.points} pts`}
+            canManage={!isStudent}
+            onEdit={() => router.push(`/Courses/${cid}/Assignments/${a._id}`)} 
+            onDelete={() => askDelete(a._id)}
           />
         ))}
       </ListGroup>
+
+      
+      <Modal show={confirmOpen} onHide={cancelDelete} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete assignment?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          This action cannot be undone. Are you sure you want to delete this assignment?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={cancelDelete}>
+            Cancel
+          </Button>
+          <Button variant="danger" id="wd-confirm-delete" onClick={confirmDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
@@ -120,6 +173,9 @@ function AssignmentRow({
   subMidStrong,
   subMidTail,
   subBot,
+  canManage,
+  onEdit,
+  onDelete,
 }: {
   href: string;
   title: string;
@@ -127,6 +183,9 @@ function AssignmentRow({
   subMidStrong: string;
   subMidTail: string;
   subBot: string;
+  canManage: boolean;
+  onEdit: () => void;   
+  onDelete: () => void;
 }) {
   return (
     <ListGroup.Item className="p-0 border-0">
@@ -166,7 +225,30 @@ function AssignmentRow({
 
             <div className="d-flex align-items-center gap-3 ms-sm-3">
               <FaCheckCircle className="text-success" title="Published" />
-              <FaEllipsisV className="text-secondary" role="img" aria-label="More options" />
+              {canManage ? (
+                <>
+                  <button
+                    type="button"
+                    className="btn btn-light btn-sm border"
+                    onClick={onEdit}
+                    aria-label="Edit assignment"
+                    title="Edit"
+                  >
+                    <FaPencilAlt className="text-primary" />
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-light btn-sm border"
+                    onClick={onDelete}
+                    aria-label="Delete assignment"
+                    title="Delete"
+                  >
+                    <FaTrash className="text-danger" />
+                  </button>
+                </>
+              ) : (
+                <FaEllipsisV className="text-secondary" role="img" aria-label="More options" />
+              )}
             </div>
           </div>
         </div>

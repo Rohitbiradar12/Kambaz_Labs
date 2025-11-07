@@ -1,76 +1,90 @@
+"use client";
+
 import Link from "next/link";
+import { FormControl } from "react-bootstrap";
 
 export default function Signup() {
   return (
-    <div
-      id="wd-signup-screen"
-      style={{
-        maxWidth: 300,
-        marginTop: 8,
-      }}
-    >
-      <h1 style={{ fontSize: 28, marginBottom: 12 }}>Signup</h1>
-
-      <input
-        placeholder="username"
-        className="wd-username"
-        style={{
-          width: "100%",
-          padding: "10px 12px",
-          border: "1px solid #d0d7de",
-          borderRadius: 8,
-          outline: "none",
-          marginBottom: 10,
-        }}
-      />
-
-      <input
-        placeholder="password"
-        type="password"
-        className="wd-password"
-        style={{
-          width: "100%",
-          padding: "10px 12px",
-          border: "1px solid #d0d7de",
-          borderRadius: 8,
-          outline: "none",
-          marginBottom: 10,
-        }}
-      />
-
-      <input
-        placeholder="verify password"
-        type="password"
-        className="wd-password-verify"
-        style={{
-          width: "100%",
-          padding: "10px 12px",
-          border: "1px solid #d0d7de",
-          borderRadius: 8,
-          outline: "none",
-          marginBottom: 12,
-        }}
-      />
-
-      <Link
-        href="Profile"
-        className="text-decoration-none"
-        style={{
-          display: "block",
-          width: "100%",
-          textAlign: "center",
-          padding: "10px 12px",
-          borderRadius: 8,
-          background: "#1a73e8",
-          color: "#fff",
-          fontWeight: 600,
-          marginBottom: 10,
-        }}
+    <div className="container-fluid p-0" style={{ paddingLeft: 0 }}>
+      <div
+        className="min-vh-100 d-flex align-items-center justify-content-center"
+        style={{ background: "linear-gradient(180deg, #f6f8fa 0%, #eef3ff 100%)" }}
       >
-        Signup
-      </Link>
+        <div className="w-100" style={{ maxWidth: 460 }}>
+          
+          <div className="text-center mb-4">
+            <div
+              className="d-inline-flex align-items-center justify-content-center rounded-4 mb-2 shadow-sm"
+              style={{ width: 64, height: 64, background: "#e9f2ff", color: "#1a73e8", fontWeight: 800 }}
+            >
+              KZ
+            </div>
+            <h1 className="h3 mb-1">Create your Kambaz account</h1>
+            <p className="text-secondary mb-0">It only takes a minute.</p>
+          </div>
 
-      <Link href="Signin">Signin</Link>
+          
+          <div className="card border-0 shadow rounded-4">
+            <div className="card-body p-4 p-md-5">
+              
+              <label htmlFor="signup-username" className="form-label fw-semibold">
+                Username
+              </label>
+              <div className="input-group mb-3">
+                
+                <FormControl
+                  id="signup-username"
+                  placeholder="rohit"
+                  className="border-start-0 wd-username"
+                />
+              </div>
+
+              
+              <label htmlFor="signup-password" className="form-label fw-semibold">
+                Password
+              </label>
+              <div className="input-group mb-3">
+                
+                <FormControl
+                  id="signup-password"
+                  type="password"
+                  placeholder="password"
+                  className="border-start-0 wd-password"
+                />
+              </div>
+
+              
+              <label htmlFor="signup-password-verify" className="form-label fw-semibold">
+                Verify password
+              </label>
+              <div className="input-group mb-4">
+                
+                <FormControl
+                  id="signup-password-verify"
+                  type="password"
+                  placeholder="verify password"
+                  className="border-start-0 wd-password-verify"
+                />
+              </div>
+
+              <Link
+                href="Profile"
+                className="btn btn-primary w-100 py-2 fw-semibold"
+                style={{ background: "#1a73e8" }}
+              >
+                Sign up
+              </Link>
+            </div>
+          </div>
+
+          <div className="text-center mt-3">
+            <span className="text-secondary me-1">Already have an account?</span>
+            <Link href="Signin" className="fw-semibold text-decoration-none">
+              Sign in
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

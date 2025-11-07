@@ -1,4 +1,3 @@
-// app/(Kambaz)/Navigation.tsx
 "use client";
 
 import { usePathname } from "next/navigation";
@@ -50,15 +49,16 @@ export default function KambazNavigation() {
       textInactive: "text-white",
       textActive: "text-danger",
     },
-    {
-      id: "/Courses/RS101/Home",
-      href: "/Courses/RS101/Home",
-      label: "Courses",
-      iconInactive: <LiaBookSolid className="fs-3 text-danger" />,
-      iconActive: <LiaBookSolid className="fs-3 text-danger" />,
-      textInactive: "text-white",
-      textActive: "text-danger",
-    },
+   {
+  id: "/Courses/RS101",          
+  href: "/Courses/RS101",        
+  label: "Courses",
+  iconInactive: <LiaBookSolid className="fs-3 text-danger" />,
+  iconActive: <LiaBookSolid className="fs-3 text-danger" />,
+  textInactive: "text-white",
+  textActive: "text-danger",
+},
+
     {
       id: "calendar",
       href: "/Calendar",
