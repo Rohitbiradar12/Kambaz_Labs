@@ -33,17 +33,30 @@ export default function AssignmentEditor() {
     available: existing?.available ?? new Date().toISOString().slice(0, 16),
     until:
       existing?.until ??
-      new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 16),
+      new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .slice(0, 16),
   });
+
+
+  const [errors, setErrors] = useState<{ title?: string }>({});
 
   useEffect(() => {
     if (!isNew && !existing) {
-      
       router.replace(`/Courses/${cid}/Assignments`);
     }
   }, [existing, isNew, cid, router]);
 
   const save = () => {
+    
+    if (!form.title.trim()) {
+      setErrors({ title: "Assignment name is mandatory." });
+      
+      const el = document.getElementById("wd-name") as HTMLInputElement | null;
+      el?.focus();
+      return;
+    }
+
     const payload = { ...form, course: String(cid) };
     if (isNew) {
       const { _id, ...noId } = payload;
@@ -73,6 +86,11 @@ export default function AssignmentEditor() {
         .actions { display: flex; justify-content: flex-end; gap: 8px; }
         .plain-field { width: 100%; }
         .panel .form-control, .panel .form-select, .panel input[type="text"], .panel input[type="number"], .panel input[type="datetime-local"], .panel select { width: 100%; }
+
+        
+        .invalid-feedback { display:block; color:#dc3545; font-size:.875rem; margin-top:6px; }
+        .is-invalid { border-color:#dc3545 !important; }
+
         @media (max-width: 992px) {
           #wd-assignments-editor { padding-left: 16px; padding-right: 16px; }
           :root{ --label-col: clamp(140px, 22vw, 200px); --field-col: minmax(0, 1fr); }
@@ -90,13 +108,26 @@ export default function AssignmentEditor() {
       <div className="form-row row-span mb-3">
         <div className="span-full">
           <div className="stacked">
-            <label htmlFor="wd-name" className="row-label left">Assignment Name</label>
+            <label htmlFor="wd-name" className="row-label left">
+              Assignment Name
+            </label>
             <input
               id="wd-name"
-              className="form-control"
+              className={`form-control ${errors.title ? "is-invalid" : ""}`}
               value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              onChange={(e) => {
+                setForm({ ...form, title: e.target.value });
+                
+                if (errors.title) setErrors((prev) => ({ ...prev, title: undefined }));
+              }}
+              aria-invalid={!!errors.title}
+              aria-describedby={errors.title ? "wd-name-error" : undefined}
             />
+            {errors.title && (
+              <div id="wd-name-error" className="invalid-feedback">
+                {errors.title}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -125,7 +156,9 @@ export default function AssignmentEditor() {
             type="number"
             className="form-control"
             value={form.points}
-            onChange={(e) => setForm({ ...form, points: Number(e.target.value) || 0 })}
+            onChange={(e) =>
+              setForm({ ...form, points: Number(e.target.value) || 0 })
+            }
           />
         </div>
       </div>
@@ -157,12 +190,16 @@ export default function AssignmentEditor() {
 
               <div className="form-check">
                 <input className="form-check-input" type="checkbox" id="wd-text-entry" />
-                <label className="form-check-label" htmlFor="wd-text-entry">Text Entry</label>
+                <label className="form-check-label" htmlFor="wd-text-entry">
+                  Text Entry
+                </label>
               </div>
 
               <div className="form-check">
                 <input className="form-check-input" type="checkbox" id="wd-website-url" defaultChecked />
-                <label className="form-check-label" htmlFor="wd-website-url">Website URL</label>
+                <label className="form-check-label" htmlFor="wd-website-url">
+                  Website URL
+                </label>
               </div>
             </div>
           </div>
@@ -217,8 +254,12 @@ export default function AssignmentEditor() {
 
       <hr />
       <div className="actions mt-3">
-        <Link href={`/Courses/${cid}/Assignments`} className="btn btn-light">Cancel</Link>
-        <button className="btn btn-danger" onClick={save}>Save</button>
+        <Link href={`/Courses/${cid}/Assignments`} className="btn btn-light">
+          Cancel
+        </Link>
+        <button className="btn btn-danger" onClick={save}>
+          Save
+        </button>
       </div>
     </div>
   );

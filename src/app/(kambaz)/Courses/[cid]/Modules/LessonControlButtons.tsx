@@ -4,14 +4,17 @@ import { FaPencil } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa";
 import GreenCheckmark from "./GreenCheckmark";
 import { BsPlus } from "react-icons/bs";
+
 export default function LessonControlButtons({
   moduleId,
   deleteModule,
   editModule,
+  onAddLesson, 
 }: {
   moduleId: string;
   deleteModule: (moduleId: string) => void;
   editModule: (moduleId: string) => void;
+  onAddLesson: (moduleId: string) => void; 
 }) {
   return (
     <div className="float-end">
@@ -24,7 +27,8 @@ export default function LessonControlButtons({
         onClick={() => deleteModule(moduleId)}
       />
       <GreenCheckmark />
-      <BsPlus className="fs-1" />
+      
+      <BsPlus className="fs-1" onClick={() => onAddLesson(moduleId)} />
       <IoEllipsisVertical className="fs-4" />
     </div>
   );
