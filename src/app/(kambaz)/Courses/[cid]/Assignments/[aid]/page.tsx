@@ -16,6 +16,8 @@ export default function AssignmentEditor() {
   const router = useRouter();
   const dispatch = useDispatch();
   const { assignments } = useSelector((s: RootState) => s.assignmentsReducer);
+  const { currentUser } = useSelector((s: RootState) => s.accountReducer);
+  const isStudent = currentUser?.role === "STUDENT";
 
   const isNew = aid === "new";
   const existing = useMemo(
@@ -38,7 +40,6 @@ export default function AssignmentEditor() {
         .slice(0, 16),
   });
 
-
   const [errors, setErrors] = useState<{ title?: string }>({});
 
   useEffect(() => {
@@ -48,10 +49,15 @@ export default function AssignmentEditor() {
   }, [existing, isNew, cid, router]);
 
   const save = () => {
-    
+
+    if (isStudent) {
+      router.push(`/Courses/${cid}/Assignments`);
+      return;
+    }
+
     if (!form.title.trim()) {
       setErrors({ title: "Assignment name is mandatory." });
-      
+
       const el = document.getElementById("wd-name") as HTMLInputElement | null;
       el?.focus();
       return;
@@ -87,7 +93,6 @@ export default function AssignmentEditor() {
         .plain-field { width: 100%; }
         .panel .form-control, .panel .form-select, .panel input[type="text"], .panel input[type="number"], .panel input[type="datetime-local"], .panel select { width: 100%; }
 
-        
         .invalid-feedback { display:block; color:#dc3545; font-size:.875rem; margin-top:6px; }
         .is-invalid { border-color:#dc3545 !important; }
 
@@ -117,11 +122,13 @@ export default function AssignmentEditor() {
               value={form.title}
               onChange={(e) => {
                 setForm({ ...form, title: e.target.value });
-                
-                if (errors.title) setErrors((prev) => ({ ...prev, title: undefined }));
+
+                if (errors.title)
+                  setErrors((prev) => ({ ...prev, title: undefined }));
               }}
               aria-invalid={!!errors.title}
               aria-describedby={errors.title ? "wd-name-error" : undefined}
+              disabled={isStudent}
             />
             {errors.title && (
               <div id="wd-name-error" className="invalid-feedback">
@@ -142,14 +149,19 @@ export default function AssignmentEditor() {
               className="form-control"
               rows={3}
               value={form.description}
-              onChange={(e) => setForm({ ...form, description: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, description: e.target.value })
+              }
+              disabled={isStudent}
             />
           </div>
         </div>
       </div>
 
       <div className="form-row mb-3">
-        <label htmlFor="wd-points" className="row-label">Points</label>
+        <label htmlFor="wd-points" className="row-label">
+          Points
+        </label>
         <div className="field-col">
           <input
             id="wd-points"
@@ -159,14 +171,22 @@ export default function AssignmentEditor() {
             onChange={(e) =>
               setForm({ ...form, points: Number(e.target.value) || 0 })
             }
+            disabled={isStudent}
           />
         </div>
       </div>
 
       <div className="form-row mb-3">
-        <label htmlFor="wd-group" className="row-label">Assignment Group</label>
+        <label htmlFor="wd-group" className="row-label">
+          Assignment Group
+        </label>
         <div className="field-col">
-          <select id="wd-group" defaultValue="ASSIGNMENTS" className="form-select">
+          <select
+            id="wd-group"
+            defaultValue="ASSIGNMENTS"
+            className="form-select"
+            disabled={isStudent}
+          >
             <option>ASSIGNMENTS</option>
             <option>QUIZZES</option>
             <option>EXAMS</option>
@@ -179,7 +199,12 @@ export default function AssignmentEditor() {
         <label className="row-label">Submission Type</label>
         <div className="field-col">
           <div className="panel">
-            <select id="wd-submission-type" defaultValue="Online" className="form-select mb-2">
+            <select
+              id="wd-submission-type"
+              defaultValue="Online"
+              className="form-select mb-2"
+              disabled={isStudent}
+            >
               <option>Online</option>
               <option>On Paper</option>
               <option>External Tool</option>
@@ -189,14 +214,25 @@ export default function AssignmentEditor() {
               <div className="fw-semibold">Online Entry Options</div>
 
               <div className="form-check">
-                <input className="form-check-input" type="checkbox" id="wd-text-entry" />
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="wd-text-entry"
+                  disabled={isStudent}
+                />
                 <label className="form-check-label" htmlFor="wd-text-entry">
                   Text Entry
                 </label>
               </div>
 
               <div className="form-check">
-                <input className="form-check-input" type="checkbox" id="wd-website-url" defaultChecked />
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="wd-website-url"
+                  defaultChecked
+                  disabled={isStudent}
+                />
                 <label className="form-check-label" htmlFor="wd-website-url">
                   Website URL
                 </label>
@@ -211,40 +247,62 @@ export default function AssignmentEditor() {
         <div className="field-col">
           <div className="panel">
             <div className="stacked mb-3">
-              <label htmlFor="wd-assign-to" className="fw-semibold">Assign to</label>
-              <input id="wd-assign-to" defaultValue="Everyone" className="form-control" />
+              <label htmlFor="wd-assign-to" className="fw-semibold">
+                Assign to
+              </label>
+              <input
+                id="wd-assign-to"
+                defaultValue="Everyone"
+                className="form-control"
+                disabled={isStudent}
+              />
             </div>
 
             <div className="stacked mb-3">
-              <label htmlFor="wd-due-date" className="fw-semibold">Due</label>
+              <label htmlFor="wd-due-date" className="fw-semibold">
+                Due
+              </label>
               <input
                 type="datetime-local"
                 id="wd-due-date"
                 className="form-control"
                 value={form.due}
-                onChange={(e) => setForm({ ...form, due: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, due: e.target.value })
+                }
+                disabled={isStudent}
               />
             </div>
 
             <div className="two-cols">
               <div className="stacked">
-                <label htmlFor="wd-available-from" className="fw-semibold">Available from</label>
+                <label htmlFor="wd-available-from" className="fw-semibold">
+                  Available from
+                </label>
                 <input
                   type="datetime-local"
                   id="wd-available-from"
                   className="form-control"
                   value={form.available}
-                  onChange={(e) => setForm({ ...form, available: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, available: e.target.value })
+                  }
+                  disabled={isStudent}
                 />
               </div>
               <div className="stacked">
-                <label htmlFor="wd-available-until" className="fw-semibold">Until</label>
+                <label htmlFor="wd-available-until" className="fw-semibold">
+                  Until
+                </label>
                 <input
                   type="datetime-local"
                   id="wd-available-until"
                   className="form-control"
                   value={form.until}
-                  onChange={(e) => setForm({ ...form, until: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, until: e.target.value })
+                  }
+                  disabled={isStudent}
                 />
               </div>
             </div>
@@ -264,3 +322,4 @@ export default function AssignmentEditor() {
     </div>
   );
 }
+
