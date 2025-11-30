@@ -154,6 +154,7 @@ export default function Profile() {
                 <div className="col-md-6">
                   <label className="form-label fw-semibold">
                     Date of birth
+                    
                   </label>
                   <input
                     type="date"
