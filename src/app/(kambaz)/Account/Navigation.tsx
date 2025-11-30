@@ -8,20 +8,32 @@ import { RootState } from "../store";
 
 export default function AccountNavigation() {
   const pathname = usePathname();
-  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
+  const { currentUser } = useSelector(
+    (state: RootState) => state.accountReducer
+  );
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
 
-  const links = currentUser
-    ? [{ href: "/Account/Profile", label: "Profile" }]
-    : [
-        { href: "/Account/Signin", label: "Signin" },
-        { href: "/Account/Signup", label: "Signup" },
-      ];
+  const links =
+    currentUser
+      ? [
+          { href: "/Account/Profile", label: "Profile" },
+
+          ...(currentUser.role === "ADMIN"
+            ? [{ href: "/Account/Users", label: "Users" }]
+            : []),
+        ]
+      : [
+          { href: "/Account/Signin", label: "Signin" },
+          { href: "/Account/Signup", label: "Signup" },
+        ];
 
   return (
-    <ListGroup id="wd-account-navigation" className="wd list-group fs-5 rounded-0">
+    <ListGroup
+      id="wd-account-navigation"
+      className="wd list-group fs-5 rounded-0"
+    >
       {links.map(({ href, label }) => (
         <Link
           key={href}

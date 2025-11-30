@@ -1,27 +1,63 @@
 "use client";
+
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { Table } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import PeopleDetails from "../Details";
 import * as client from "../client";
 
-export default function PeopleTable() {
-  const p = useParams<{ cid: string }>();
-  const cid = Array.isArray(p?.cid) ? p.cid[0] : p?.cid;
+type PeopleTableProps = {
+  allUsers?: any[];
+  fetchAllUsers?: () => Promise<void> | void;
+  fetchAll?: boolean;
+};
 
-  const [rows, setRows] = useState<any[]>([]);
+export default function PeopleTable({
+  allUsers,
+  fetchAllUsers,
+  fetchAll = false,
+}: PeopleTableProps) {
+  const { cid } = useParams<{ cid: string }>();
+
+  const [users, setUsers] = useState<any[]>([]);
+  const [showDetails, setShowDetails] = useState(false);
+  const [showUserId, setShowUserId] = useState<string | null>(null);
+
+  const fetchUsersForCourse = async () => {
+    if (!cid) return;
+    const data = await client.findUsersForCourse(String(cid));
+    setUsers(data);
+  };
 
   useEffect(() => {
-    const load = async () => {
-      if (!cid) return;
-      const users = await client.findUsersForCourse(String(cid));
-      setRows(users);
-    };
-    load();
-  }, [cid]);
+    if (fetchAll) {
+      setUsers(allUsers ?? []);
+    } else {
+      fetchUsersForCourse();
+    }
+  }, [fetchAll, allUsers, cid]);
+
+  const openDetails = (id: string) => {
+    setShowUserId(id);
+    setShowDetails(true);
+  };
+
+  const closeDetails = async () => {
+    setShowDetails(false);
+    setShowUserId(null);
+
+    if (fetchAll) {
+      await fetchAllUsers?.();
+    } else {
+      await fetchUsersForCourse();
+    }
+  };
 
   return (
-    <div id="wd-people-table">
+    <div id="wd-people-table" className="position-relative">
+      {showDetails && <PeopleDetails uid={showUserId} onClose={closeDetails} />}
+
       <Table striped hover bordered>
         <thead>
           <tr>
@@ -34,12 +70,17 @@ export default function PeopleTable() {
           </tr>
         </thead>
         <tbody>
-          {rows.map((user) => (
+          {users.map((user: any) => (
             <tr key={String(user._id)}>
               <td className="wd-full-name text-nowrap">
-                <FaUserCircle className="me-2 fs-1 text-secondary" />
-                <span className="wd-first-name">{user.firstName}</span>{" "}
-                <span className="wd-last-name">{user.lastName}</span>
+                <button
+                  type="button"
+                  className="btn btn-link p-0 text-decoration-none text-danger"
+                  onClick={() => openDetails(user._id)}
+                >
+                  <FaUserCircle className="me-2 fs-1 text-secondary" />
+                  {user.firstName} {user.lastName}
+                </button>
               </td>
               <td className="wd-login-id">{user.loginId}</td>
               <td className="wd-section">{user.section}</td>

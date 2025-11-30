@@ -160,7 +160,7 @@ p#wd-id-selector-2 {
    clear: both;
 }
 
-/*--------Grid------*/
+
 
 .wd-grid-row {
    clear: both;
@@ -190,7 +190,6 @@ p#wd-id-selector-2 {
    float: left;
 }
  
-/*--------Flex----------*/
 
 .wd-flex-row-container {
   display: flex;

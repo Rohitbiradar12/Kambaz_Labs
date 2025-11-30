@@ -16,10 +16,10 @@ import ModuleControlButtons from "./LessonControlButtons";
 
 import {
   setModules,
-  addModule, 
+  addModule,
   editModule,
-  updateModule,  
-  addLesson,
+  updateModule,
+  // addLesson, 
   startEditLesson,
   updateLesson,
   deleteLesson,
@@ -63,11 +63,16 @@ export default function Modules() {
     !!currentUser &&
     (currentUser.role === "FACULTY" || currentUser.role === "ADMIN");
 
-
   const fetchModules = async () => {
     if (!cid) return;
     const serverModules = await client.findModulesForCourse(cid as string);
-    dispatch(setModules(serverModules));
+    const normalizedModules = Array.isArray(serverModules)
+      ? serverModules
+      : Array.isArray(serverModules?.modules)
+      ? serverModules.modules
+      : [];
+
+    dispatch(setModules(normalizedModules));
   };
 
   useEffect(() => {
@@ -78,23 +83,21 @@ export default function Modules() {
     if (!canManage) return;
     if (!cid || !moduleName.trim()) return;
 
-    const payload = { name: moduleName.trim() };
+    const payload = { name: moduleName.trim(), description: "", lessons: [] };
     const module = await client.createModuleForCourse(String(cid), payload);
     dispatch(setModules([...modules, module]));
     setModuleName("");
   };
 
-
   const onRemoveModule = async (moduleId: string) => {
     if (!canManage) return;
-    await client.deleteModule(moduleId);
+    await client.deleteModule(cid, moduleId);
     dispatch(setModules(modules.filter((m) => m._id !== moduleId)));
   };
 
-
   const onUpdateModule = async (module: ModuleItem) => {
     if (!canManage) return;
-    await client.updateModule(module);
+    await client.updateModule(cid as string, module);
     const newModules = modules.map((m) =>
       m._id === module._id ? module : m
     );
@@ -107,9 +110,34 @@ export default function Modules() {
     setNewLessonName("");
   };
 
-  const submitAddLesson = (moduleId: string) => {
+  const submitAddLesson = async (moduleId: string) => {
     if (!canManage || !newLessonName.trim()) return;
-    dispatch(addLesson({ moduleId, name: newLessonName.trim() }));
+
+    const target = modules.find((m: ModuleItem) => m._id === moduleId);
+    if (!target) return;
+
+    const newLesson: Lesson = {
+      _id: `${Date.now()}-${Math.random().toString(16).slice(2)}`, 
+      name: newLessonName.trim(),
+      description: "",
+      module: moduleId,
+    };
+
+    const updatedModule: ModuleItem = {
+      ...target,
+      lessons: [...(target.lessons ?? []), newLesson],
+    };
+
+   
+    await client.updateModule(String(cid), updatedModule);
+
+    
+    const updatedModules = modules.map((m: ModuleItem) =>
+      m._id === moduleId ? updatedModule : m
+    );
+    dispatch(setModules(updatedModules));
+
+    
     setNewLessonName("");
     setAddingFor(null);
   };

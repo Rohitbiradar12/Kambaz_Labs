@@ -10,7 +10,7 @@ export default function ModulesControls({
   setModuleName,
   addModule,
 }: {
-  /** ONLY controls showing the red “+ Module” dialog; other buttons always visible/enabled */
+
   canManageAdd: boolean;
   moduleName: string;
   setModuleName: (title: string) => void;

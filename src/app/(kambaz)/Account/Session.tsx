@@ -36,7 +36,7 @@ export default function Session({ children }: { children: any }) {
     };
 
     load();
-  }, [dispatch, pathname]);
+  }, [dispatch]);
 
   if (pending) return null;
   return children;
