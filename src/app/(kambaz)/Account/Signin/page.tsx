@@ -132,7 +132,7 @@ export default function Signin() {
                   </div>
                 </div>
 
-                <div className="border rounded-3 p-3 bg-light">
+                <div className="border rounded-3 p-3 mb-2 bg-light">
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="small">
                       <div><strong>Faculty</strong></div>
@@ -143,6 +143,23 @@ export default function Signin() {
                       type="button"
                       className="btn btn-outline-primary btn-sm"
                       onClick={() => useCreds("iron_man", "stark123")}
+                    >
+                      Use
+                    </button>
+                  </div>
+                </div>
+
+                <div className="border rounded-3 p-3 bg-light">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div className="small">
+                      <div><strong>Admin</strong></div>
+                      <div><code>"username": "ada"</code></div>
+                      <div><code>"password": "123"</code></div>
+                    </div>
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary btn-sm"
+                      onClick={() => useCreds("ada", "123")}
                     >
                       Use
                     </button>
