@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { Table } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
@@ -13,6 +13,33 @@ type PeopleTableProps = {
   fetchAll?: boolean;
 };
 
+type User = {
+  _id: string;
+  firstName?: string;
+  lastName?: string;
+  loginId?: string;
+  section?: string;
+  role?: string;
+  lastActivity?: string;
+  totalActivity?: string;
+};
+
+function normalizeUsers(input: any): User[] {
+  if (!Array.isArray(input)) return [];
+  return input
+    .filter((u): u is User => !!u && typeof u === "object" && !!u._id)
+    .map((u) => ({
+      _id: String(u._id),
+      firstName: u.firstName ?? "",
+      lastName: u.lastName ?? "",
+      loginId: u.loginId ?? "",
+      section: u.section ?? "",
+      role: u.role ?? "",
+      lastActivity: u.lastActivity ?? "",
+      totalActivity: u.totalActivity ?? "",
+    }));
+}
+
 export default function PeopleTable({
   allUsers,
   fetchAllUsers,
@@ -20,25 +47,26 @@ export default function PeopleTable({
 }: PeopleTableProps) {
   const { cid } = useParams<{ cid: string }>();
 
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [showDetails, setShowDetails] = useState(false);
   const [showUserId, setShowUserId] = useState<string | null>(null);
 
   const fetchUsersForCourse = async () => {
     if (!cid) return;
     const data = await client.findUsersForCourse(String(cid));
-    setUsers(data);
+    setUsers(normalizeUsers(data));
   };
 
   useEffect(() => {
     if (fetchAll) {
-      setUsers(allUsers ?? []);
+      setUsers(normalizeUsers(allUsers));
     } else {
       fetchUsersForCourse();
     }
   }, [fetchAll, allUsers, cid]);
 
   const openDetails = (id: string) => {
+    if (!id) return;
     setShowUserId(id);
     setShowDetails(true);
   };
@@ -54,9 +82,13 @@ export default function PeopleTable({
     }
   };
 
+  const safeUsers = useMemo(() => users.filter((u) => u && u._id), [users]);
+
   return (
     <div id="wd-people-table" className="position-relative">
-      {showDetails && <PeopleDetails uid={showUserId} onClose={closeDetails} />}
+      {showDetails && showUserId && (
+        <PeopleDetails uid={showUserId} onClose={closeDetails} />
+      )}
 
       <Table striped hover bordered>
         <thead>
@@ -70,8 +102,8 @@ export default function PeopleTable({
           </tr>
         </thead>
         <tbody>
-          {users.map((user: any) => (
-            <tr key={String(user._id)}>
+          {safeUsers.map((user) => (
+            <tr key={user._id}>
               <td className="wd-full-name text-nowrap">
                 <button
                   type="button"
@@ -79,7 +111,7 @@ export default function PeopleTable({
                   onClick={() => openDetails(user._id)}
                 >
                   <FaUserCircle className="me-2 fs-1 text-secondary" />
-                  {user.firstName} {user.lastName}
+                  {(user.firstName || "Unknown") + " " + (user.lastName || "")}
                 </button>
               </td>
               <td className="wd-login-id">{user.loginId}</td>
